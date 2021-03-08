@@ -182,4 +182,7 @@ fabric.properties
 .history
 .ionide
 
+.env
+node_modules
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij,eclipse
