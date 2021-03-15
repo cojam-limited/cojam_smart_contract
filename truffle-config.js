@@ -48,7 +48,9 @@ module.exports = {
         gasPrice: null
     },
     klaytn_mainnet: {
-      provider: () => new KlaytnWalletProvider(process.env.PRIVATE_KEY_CYPRESS, "https://api.cypress.klaytn.net:8651"),
+      //provider: () => new KlaytnWalletProvider(process.env.PRIVATE_KEY_CYPRESS, "https://api.cypress.klaytn.net:8651"),
+      //provider: () => new KlaytnWalletProvider(process.env.PRIVATE_KEY_CYPRESS, "https://tn.henesis.io/klaytn/mainnet?clientId=30c53153a44235aa2d799189911edec5"),
+      provider: () => new KlaytnWalletProvider(process.env.PRIVATE_KEY_CYPRESS, "https://kaikas.cypress.klaytn.net:8651"),
         network_id: '8217', //Klaytn mainnet's network id
         gas: '8500000',
         gasPrice: null
