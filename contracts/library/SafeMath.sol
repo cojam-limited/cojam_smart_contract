@@ -1,4 +1,5 @@
 //pragma solidity ^0.6.0;
+//SPDX-License-Identifier: MIT  //2021.05.25 일 cyj 추가
 pragma solidity 0.7.1;
 
 /**
