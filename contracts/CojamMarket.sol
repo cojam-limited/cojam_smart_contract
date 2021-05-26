@@ -287,7 +287,7 @@ contract CojamMarket is MarketManager, Ownable, UserManager {
         dividendToken(market, _cojamFeeAccount, cojamFee);
         dividendToken(market, _charityFeeAccount, charityFee);
 
-        market.marketRewardBaseTokens = market.marketRemainTokens
+        market.marketRewardBaseTokens = market.marketRemainTokens;
 
         emit SuccessMarket(
             marketKey,
