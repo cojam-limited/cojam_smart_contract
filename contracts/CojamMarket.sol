@@ -283,11 +283,11 @@ contract CojamMarket is MarketManager, Ownable, UserManager {
         uint256 charityFee =
             (marketRemainTokens.mul(market.charityFeePercentage)).div(100);
 
+        market.marketRewardBaseTokens = marketRemainTokens.sub(creatorFee).sub(cojamFee).sub(charityFee);
+
         dividendToken(market, market.creator, creatorFee);
         dividendToken(market, _cojamFeeAccount, cojamFee);
         dividendToken(market, _charityFeeAccount, charityFee);
-
-        market.marketRewardBaseTokens = market.marketRemainTokens;
 
         emit SuccessMarket(
             marketKey,

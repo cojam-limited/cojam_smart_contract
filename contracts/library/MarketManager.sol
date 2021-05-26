@@ -158,8 +158,8 @@ contract MarketManager is MarketAnswerConstraint, AnswerBettingConstraint {
             0,
             0,
             0,
-            true,
-            0
+            0,
+            true
         ); // Create Market
     }
 

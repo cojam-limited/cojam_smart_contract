@@ -18,6 +18,6 @@ struct Market {
     uint256 marketTotalTokens;
     uint256 marketRemainTokens;
     uint256 correctAnswerKey;
-    bool exist;
     uint256 marketRewardBaseTokens;
+    bool exist;
 }
