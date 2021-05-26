@@ -9,7 +9,7 @@
     "docs": "scripts/docs.sh",
     "lint": "npm run lint:js && npm run lint:sol",
     "lint:js": "eslint '*/**/*.{js,ts}' --quiet --fix",
-    "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
+    "lint:sol": "solhint --max-warnings 0 'contracts/**/*.sol'",
     "prettier": "prettier --write **/{**,.}/*.sol",
     "benchmark": "bsol --sol-dir contracts/",
     "test": "scripts/test.sh",
@@ -24,22 +24,23 @@
     "@openzeppelin/test-helpers": "^0.5.3",
     "chai": "^4.2.0",
     "coveralls": "^3.0.7",
+    "dotenv": "^8.2.0",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.1",
     "ganache-cli": "^6.9.1",
+    "leafleth": "https://github.com/leekt216/leafleth",
     "prettier": "^1.19.1",
-    "dotenv": "^8.2.0",
     "prettier-plugin-solidity": "^1.0.0-alpha.34",
     "solhint": "^2.3.0",
     "solidity-coverage": "^0.7.1",
     "truffle": "^5.1.19",
     "truffle-hdwallet-provider": "^1.0.17",
-    "web3": "^1.2.6",
-    "leafleth": "https://github.com/leekt216/leafleth"
+    "web3": "^1.2.6"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^2.5.0",
+    "caver-js": "^1.4.1",
     "truffle-hdwallet-provider-klaytn": "^1.0.13-a",
     "truffle-privatekey-provider": "^1.5.0"
   }
