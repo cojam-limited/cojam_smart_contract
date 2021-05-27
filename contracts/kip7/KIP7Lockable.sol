@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity 0.7.1;
 
 import "./KIP7.sol";
@@ -24,7 +25,7 @@ abstract contract KIP7Lockable is KIP7, Ownable {
 
     function _lock(address from, uint256 amount, uint256 due)
     internal
-    returns (bool success)
+    returns (bool)
     {
         require(due > block.timestamp, "KIP7Lockable/lock : Cannot set due to past");
         require(
@@ -34,25 +35,24 @@ abstract contract KIP7Lockable is KIP7, Ownable {
         _totalLocked[from] = _totalLocked[from].add(amount);
         _locks[from].push(LockInfo(amount, due));
         emit Lock(from, amount, due);
-        success = true;
+        return true;
     }
 
-    function _unlock(address from, uint256 index) internal returns (bool success) {
+    function _unlock(address from, uint256 index) internal returns (bool) {
         LockInfo storage lock = _locks[from][index];
         _totalLocked[from] = _totalLocked[from].sub(lock.amount);
         emit Unlock(from, lock.amount);
         _locks[from][index] = _locks[from][_locks[from].length - 1];
         _locks[from].pop();
-        success = true;
+        return true;
     }
 
-    function unlock(address from, uint256 idx) external returns(bool success){
+    function unlock(address from, uint256 idx) external returns(bool){
         require(_locks[from][idx].due < block.timestamp,"KIP7Lockable/unlock: cannot unlock before due");
-        _unlock(from, idx);
-        return true;  // 2021.05.25 일 cyj 추가
+        return _unlock(from, idx);
     }
 
-    function unlockAll(address from) external returns (bool success) {
+    function unlockAll(address from) external returns (bool) {
         for(uint256 i = 0; i < _locks[from].length; i++){
             if(_locks[from][i].due < block.timestamp){
                 if(_unlock(from, i)){
@@ -60,34 +60,34 @@ abstract contract KIP7Lockable is KIP7, Ownable {
                 }
             }
         }
-        success = true;
+        return true;
     }
 
     function releaseLock(address from)
     external
     onlyOwner
-    returns (bool success)
+    returns (bool)
     {
         for(uint256 i = 0; i < _locks[from].length; i++){
             if(_unlock(from, i)){
                 i--;
             }
         }
-        success = true;
+        return true;
     }
 
     function transferWithLockUp(address recipient, uint256 amount, uint256 due)
     external
     onlyOwner
-    returns (bool success)
+    returns (bool)
     {
         require(
             recipient != address(0),
             "KIP7Lockable/transferWithLockUp : Cannot send to zero address"
         );
-        _transfer(msg.sender, recipient, amount);
-        _lock(recipient, amount, due);
-        success = true;
+        require(_transfer(msg.sender, recipient, amount), "KIP7Lockable/transferWithLockUp : Cannot send to recipient");
+        
+        return _lock(recipient, amount, due);
     }
 
     function lockInfo(address locked, uint256 index)
