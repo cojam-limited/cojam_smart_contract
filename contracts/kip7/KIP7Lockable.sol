@@ -49,6 +49,7 @@ abstract contract KIP7Lockable is KIP7, Ownable {
     function unlock(address from, uint256 idx) external returns(bool success){
         require(_locks[from][idx].due < block.timestamp,"KIP7Lockable/unlock: cannot unlock before due");
         _unlock(from, idx);
+        return true;  // 2021.05.25 일 cyj 추가
     }
 
     function unlockAll(address from) external returns (bool success) {
