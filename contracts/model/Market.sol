@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity 0.7.1;
 pragma experimental ABIEncoderV2;
 
@@ -18,5 +19,6 @@ struct Market {
     uint256 marketTotalTokens;
     uint256 marketRemainTokens;
     uint256 correctAnswerKey;
+    uint256 marketRewardBaseTokens;
     bool exist;
 }

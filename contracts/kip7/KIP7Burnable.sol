@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity 0.7.1;
 
 import "./KIP7.sol";
@@ -11,21 +12,22 @@ abstract contract KIP7Burnable is KIP7, Pausable {
     function burn(uint256 amount)
         external
         whenNotPaused
-        returns (bool success)
+        returns (bool)
     {
-        success = _burn(msg.sender, amount);
+        bool success = _burn(msg.sender, amount);
         emit Burn(msg.sender, amount);
-        success = true;
+        return success;
     }
 
     function burnFrom(address burned, uint256 amount)
         external
         whenNotPaused
-        returns (bool success)
+        returns (bool)
     {
-        _burn(burned, amount);
+        require(_burn(burned, amount), "KIP7Burnable/burnFrom : Failed burn");
         emit Burn(burned, amount);
-        success = _approve(
+        
+        return _approve(
             burned,
             msg.sender,
             _allowances[burned][msg.sender].sub(

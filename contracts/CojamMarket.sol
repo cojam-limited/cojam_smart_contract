@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity 0.7.1;
 
 /*
@@ -57,7 +58,7 @@ contract CojamMarket is MarketManager, Ownable, UserManager {
     address internal _charityFeeAccount;
     address internal _remainAccount;
 
-    constructor(address token) public {
+    constructor(address token) {
         baseToken = KIP7(token);
     }
 
@@ -282,6 +283,8 @@ contract CojamMarket is MarketManager, Ownable, UserManager {
             (marketRemainTokens.mul(market.cojamFeePercentage)).div(100);
         uint256 charityFee =
             (marketRemainTokens.mul(market.charityFeePercentage)).div(100);
+
+        market.marketRewardBaseTokens = marketRemainTokens.sub(creatorFee).sub(cojamFee).sub(charityFee);
 
         dividendToken(market, market.creator, creatorFee);
         dividendToken(market, _cojamFeeAccount, cojamFee);

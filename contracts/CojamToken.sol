@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity 0.7.1;
 
 import "./kip7/KIP7Lockable.sol";
@@ -5,19 +6,15 @@ import "./kip7/KIP7Burnable.sol";
 import "./library/Pausable.sol";
 import "./library/Freezable.sol";
 
-contract CojamToken is
-    KIP7Lockable,
-    KIP7Burnable,
-    Freezable
-{
+contract CojamToken is KIP7Lockable, KIP7Burnable, Freezable {
     using SafeMath for uint256;
     string constant private _name = "Cojam";
     string constant private _symbol = "CT";
     uint8 constant private _decimals = 18;
-    uint256 constant private _initial_supply = 5_000_000_000;
+    uint256 constant private _initialSupply = 5_000_000_000;
 
     constructor() Ownable() {
-        _mint(msg.sender, _initial_supply * (10**uint256(_decimals)));
+        _mint(msg.sender, _initialSupply * (10**uint256(_decimals)));
     }
 
    function transfer(address to, uint256 amount)
@@ -26,14 +23,13 @@ contract CojamToken is
         whenNotFrozen(msg.sender)
         whenNotPaused
         checkLock(msg.sender, amount)
-        returns (bool success)
+        returns (bool)
     {
         require(
             to != address(0),
             "CT/transfer : Should not send to zero address"
         );
-        _transfer(msg.sender, to, amount);
-        success = true;
+        return _transfer(msg.sender, to, amount);
     }
 
     function transferFrom(address from, address to, uint256 amount)
@@ -42,14 +38,14 @@ contract CojamToken is
         whenNotFrozen(from)
         whenNotPaused
         checkLock(from, amount)
-        returns (bool success)
+        returns (bool)
     {
         require(
             to != address(0),
             "CT/transferFrom : Should not send to zero address"
         );
         _transfer(from, to, amount);
-        _approve(
+        return _approve(
             from,
             msg.sender,
             _allowances[from][msg.sender].sub(
@@ -57,20 +53,18 @@ contract CojamToken is
                 "CT/transferFrom : Cannot send more than allowance"
             )
         );
-        success = true;
     }
 
     function approve(address spender, uint256 amount)
         override
         external
-        returns (bool success)
+        returns (bool)
     {
         require(
             spender != address(0),
             "CT/approve : Should not approve zero address"
         );
-        _approve(msg.sender, spender, amount);
-        success = true;
+        return _approve(msg.sender, spender, amount);
     }
 
     function name() override external pure returns (string memory tokenName) {

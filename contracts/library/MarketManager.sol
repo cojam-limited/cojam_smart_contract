@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity 0.7.1;
 pragma experimental ABIEncoderV2;
 
@@ -102,7 +103,7 @@ contract MarketManager is MarketAnswerConstraint, AnswerBettingConstraint {
             "Market/Receive: Cannot receive token"
         );
 
-        uint256 percentage = 100;
+        uint256 percentage = 100000000000000000000;
         Betting memory b = _getBetting(bk);
         uint256 _mk = b.marketKey;
         uint256 _ak = b.answerKey;
@@ -115,7 +116,7 @@ contract MarketManager is MarketAnswerConstraint, AnswerBettingConstraint {
             );
             Answer memory answer;
             answer = _getAnswer(ak);
-            percentage = (m.marketRemainTokens.mul(100)).div(
+            percentage = (m.marketRewardBaseTokens.mul(100000000000000000000)).div(
                 answer.answerTotalTokens
             );
         }
@@ -128,7 +129,9 @@ contract MarketManager is MarketAnswerConstraint, AnswerBettingConstraint {
             "Market/Receive: Given information does not match"
         );
 
-        uint256 tokens = b.tokens.mul(percentage).div(100);
+        uint256 tokens = b.tokens.mul(percentage).div(100000000000000000000);
+
+        tokens = tokens.div(10000000000000000).mul(10000000000000000);
 
         return tokens;
     }
@@ -152,6 +155,7 @@ contract MarketManager is MarketAnswerConstraint, AnswerBettingConstraint {
             cojamFeePercentage,
             charityFeePercentage,
             block.timestamp,
+            0,
             0,
             0,
             0,
