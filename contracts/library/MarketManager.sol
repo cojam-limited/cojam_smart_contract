@@ -146,6 +146,10 @@ contract MarketManager is MarketAnswerConstraint, AnswerBettingConstraint {
         uint256 cojamFeePercentage,
         uint256 charityFeePercentage
     ) internal {
+        require(
+            (!_markets[marketKey].exist),
+            "Market/DraftMarket: Market key does exist"
+        );
         _markets[marketKey] = Market(
             creator,
             title,
